@@ -1,0 +1,16 @@
+{
+  "domain": "emt_madrid",
+  "name": "EMT Madrid",
+  "codeowners": [
+    "@luca-angemi"
+  ],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/luca-angemi/emt_madrid",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "requirements": ["emt_madrid"],
+  "ssdp": [],
+  "zeroconf": [],
+  "version": 1
+}
