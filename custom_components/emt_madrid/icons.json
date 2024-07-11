@@ -1,0 +1,9 @@
+{
+  "entity": {
+    "sensor": {
+      "arrival": {
+        "default": "mdi:bus"
+      }
+    }
+  }
+}
