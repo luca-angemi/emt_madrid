@@ -21,6 +21,7 @@ _LOGGER = logging.getLogger(__name__)
 SENSOR_TYPE_EMT: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         key="next_arrival",
+        translation_key="arrival",
         device_class=SensorDeviceClass.DURATION,
         native_unit_of_measurement=UnitOfTime.MINUTES,
     ),
