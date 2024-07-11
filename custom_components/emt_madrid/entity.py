@@ -26,6 +26,7 @@ class AirFryerEntity(CoordinatorEntity):
         self._device_id = config_entry.unique_id
         self.entity_description = description
         self._attr_device_info = dr.DeviceInfo(
+            entry_type=dr.DeviceEntryType.SERVICE,
             identifiers={(DOMAIN, self._device_id)},
             name=config_entry.title,
         )
