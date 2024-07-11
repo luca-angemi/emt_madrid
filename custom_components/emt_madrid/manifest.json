@@ -12,5 +12,5 @@
   "requirements": ["emt_madrid"],
   "ssdp": [],
   "zeroconf": [],
-  "version": 1
+  "version": "0.1"
 }
