@@ -18,10 +18,9 @@ from .entity import AirFryerEntity
 _LOGGER = logging.getLogger(__name__)
 
 
-SENSOR_TYPES_MAF: tuple[SensorEntityDescription, ...] = (
+SENSOR_TYPE_EMT: tuple[SensorEntityDescription, ...] = (
     SensorEntityDescription(
         key="next_arrival",
-  #      name="Next Arrival",
         device_class=SensorDeviceClass.DURATION,
         native_unit_of_measurement=UnitOfTime.MINUTES,
     ),
@@ -35,7 +34,7 @@ async def async_setup_entry(
     coordinator = config_entry.runtime_data
     lines = coordinator.data["lines"]
     sensors = [
-        EMTMadridSensor(config_entry, SENSOR_TYPES_MAF[0], coordinator, line) for line in lines]
+        EMTMadridSensor(config_entry, SENSOR_TYPE_EMT[0], coordinator, line) for line in lines]
     async_add_entities(sensors)
 
 
