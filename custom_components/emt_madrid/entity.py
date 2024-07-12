@@ -1,4 +1,4 @@
-"""Entity representing a D-Link Power Plug device."""
+"""Entity representing a EMT Madrid device."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from .const import DOMAIN
 
 
 class AirFryerEntity(CoordinatorEntity):
-    """Representation of a D-Link Power Plug entity."""
+    """Representation of a EMT Madrid entity."""
 
     _attr_has_entity_name = True
 
