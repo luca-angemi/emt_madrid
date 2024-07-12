@@ -1,4 +1,4 @@
-"""Entity representing a EMT Madrid device."""
+"""Entity representing a D-Link Power Plug device."""
 
 from __future__ import annotations
 
@@ -11,7 +11,7 @@ from .const import DOMAIN
 
 
 class AirFryerEntity(CoordinatorEntity):
-    """Representation of a EMT Madrid entity."""
+    """Representation of a D-Link Power Plug entity."""
 
     _attr_has_entity_name = True
 
@@ -21,12 +21,11 @@ class AirFryerEntity(CoordinatorEntity):
         description: EntityDescription,
         coordinator,
     ) -> None:
-        """Initialize a EMT Madrid entity."""
+        """Initialize a D-Link Power Plug entity."""
         super().__init__(coordinator)
-        self._device_id = config_entry.unique_id
-        self.entity_description = description
+        self._device_id = config_entry.entry_id
         self._attr_device_info = dr.DeviceInfo(
-            entry_type=dr.DeviceEntryType.SERVICE,
             identifiers={(DOMAIN, self._device_id)},
+            entry_type=dr.DeviceEntryType.SERVICE,
             name=config_entry.title,
         )
