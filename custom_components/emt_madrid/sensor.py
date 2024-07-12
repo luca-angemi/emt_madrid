@@ -60,5 +60,7 @@ class EMTMadridSensor(AirFryerEntity, SensorEntity):
     @property
     def native_value(self):
         """Return the state."""
-        if self.coordinator.data is not None:
+    def native_value(self):
+        """Return the state."""
+        if self.coordinator.data and self.coordinator.data["lines"][self.line]["arrivals"]:
             return self.coordinator.data["lines"][self.line]["arrivals"][0]
