@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "stop_ids": "Bus Stop ID(s)",
+          "username": "Username",
+          "password": "Password"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Can't Connect",
+      "invalid_auth": "Invalid Auth",
+      "unknown": "Unknown Error"
+    },
+    "abort": {
+      "already_configured": "Already Configured"
+    }
+  }
+}

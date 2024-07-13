@@ -11,6 +11,7 @@ from .util import async_get_api_emt_instance
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class EMTCoordinator(DataUpdateCoordinator):
     """Class to manage fetching EMT Madrid data."""
 
@@ -22,9 +23,13 @@ class EMTCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             update_interval=timedelta(seconds=30),
         )
+        self.lines = {}
 
     async def _async_update_data(self):
         """Fetch data from EMT Madrid API."""
-        bus_stop = await async_get_api_emt_instance(self.config_entry.data)
-        return bus_stop.get_stop_info()
-
+        stops = await async_get_api_emt_instance(self.config_entry.options)
+        stop_info = {}
+        for stop, info in stops.items():
+            stop_info[stop] = info.get_stop_info()
+            self.lines[stop] = list(stop_info[stop]["lines"].keys())
+        return stop_info
