@@ -17,5 +17,14 @@
     "abort": {
       "already_configured": "Already Configured"
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": {
+          "stop_ids": "Bus Stop ID(s)"
+        }
+      }
+    }
   }
 }
