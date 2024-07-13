@@ -119,12 +119,14 @@ class OptionsFlowHandler(OptionsFlow):
         if user_input is not None:
             entity_registry = er.async_get(self.hass)
             entries = er.async_entries_for_config_entry(
-                    entity_registry, self.config_entry.entry_id
-                )
+                entity_registry, self.config_entry.entry_id
+            )
             for entry in entries:
                 if entry.unique_id.split("_")[2] not in user_input[CONF_STOP_IDS]:
                     entity_registry.async_remove(entry.entity_id)
-            return self.async_create_entry(title="", data=user_input)
+                new_options = dict(self.config_entry.options)
+                new_options.update(user_input)
+            return self.async_create_entry(title="", data=new_options)
 
         return self.async_show_form(
             step_id="init",
@@ -140,12 +142,6 @@ class OptionsFlowHandler(OptionsFlow):
                             mode=SelectSelectorMode.DROPDOWN,
                         )
                     ),
-                    vol.Required(
-                        CONF_USERNAME, default=self.config_entry.options[CONF_USERNAME]
-                    ): str,
-                    vol.Required(
-                        CONF_PASSWORD, default=self.config_entry.options[CONF_PASSWORD]
-                    ): str,
                 }
             ),
         )
