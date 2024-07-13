@@ -68,5 +68,5 @@ class EMTMadridSensor(AirFryerEntity, SensorEntity):
         data = self.coordinator.data
         try:
             return data[self.stop_id]["lines"][self.line]["arrivals"][0]
-        except (KeyError, TypeError):
+        except (KeyError, TypeError, IndexError):
             return None
