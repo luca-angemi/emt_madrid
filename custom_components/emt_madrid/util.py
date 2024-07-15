@@ -1,11 +1,15 @@
 """Util for the EMT Madrid integration."""
 
+import logging
+
 from aiohttp import ClientSession
 
 from emt_madrid import EMTAPIAuthenticator, EMTAPIBusStop
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 
 from .const import CONF_STOP_IDS
+
+logging.getLogger("emt_madrid.emt_api").setLevel(logging.ERROR)
 
 
 async def async_get_api_emt_instance(data):
