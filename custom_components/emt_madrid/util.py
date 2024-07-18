@@ -9,8 +9,7 @@ from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 
 from .const import CONF_STOP_IDS
 
-logging.getLogger("emt_madrid.emt_api").setLevel(logging.ERROR)
-
+logging.getLogger("emt_madrid").setLevel(logging.ERROR)
 
 async def async_get_api_emt_instance(data):
     """Get API EMT api response."""
