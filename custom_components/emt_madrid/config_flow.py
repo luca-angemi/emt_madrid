@@ -17,6 +17,7 @@ from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.data_entry_flow import FlowResult
 from homeassistant.exceptions import HomeAssistantError
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers import entity_registry as er
 from homeassistant.helpers.selector import (
     SelectSelector,
@@ -67,7 +68,7 @@ class ConfigFlow(ConfigFlow, domain=DOMAIN):
         config_entry: ConfigEntry,
     ) -> ConfigFlowResult:
         """Get the options flow for this handler."""
-        return OptionsFlowHandler(config_entry)
+        return OptionsFlowHandler()
 
     async def async_step_user(
         self, user_input: dict[str, Any] | None = None
@@ -107,11 +108,6 @@ class InvalidAuth(HomeAssistantError):
 class OptionsFlowHandler(OptionsFlow):
     """Config flow options handler for iss."""
 
-    def __init__(self, config_entry: ConfigEntry) -> None:
-        """Initialize options flow."""
-        self.config_entry = config_entry
-        self.options = config_entry.options
-
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
     ) -> FlowResult:
@@ -119,14 +115,16 @@ class OptionsFlowHandler(OptionsFlow):
         if user_input is not None:
             entity_registry = er.async_get(self.hass)
             entries = er.async_entries_for_config_entry(
-                entity_registry, self.config_entry.entry_id
+                entity_registry, self._config_entry_id
             )
             for entry in entries:
                 if entry.unique_id.split("_")[2] not in user_input[CONF_STOP_IDS]:
                     entity_registry.async_remove(entry.entity_id)
-                new_options = dict(self.config_entry.options)
-                new_options.update(user_input)
-            return self.async_create_entry(title="", data=new_options)
+                    device_registry = dr.async_get(self.hass)
+                    device_registry.async_remove_device(entry.device_id) 
+                options = dict(self.config_entry.options)
+                options.update(user_input)
+            return self.async_create_entry(title="", data=options)
 
         return self.async_show_form(
             step_id="init",
