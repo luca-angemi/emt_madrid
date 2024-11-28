@@ -7,7 +7,6 @@ from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant
 
 from .coordinator import EMTCoordinator
-from .util import async_get_api_emt_instance
 
 PLATFORMS: list[Platform] = [Platform.SENSOR]
 
@@ -17,8 +16,7 @@ type EMTConfigEntry = ConfigEntry[EMTCoordinator]
 async def async_setup_entry(hass: HomeAssistant, entry: EMTConfigEntry) -> bool:
     """Set up EMT Madrid from a config entry."""
 
-    api = await async_get_api_emt_instance(entry.options)
-    coordinator = EMTCoordinator(hass, api)
+    coordinator = EMTCoordinator(hass)
     await coordinator.async_refresh()
     entry.runtime_data = coordinator
 
