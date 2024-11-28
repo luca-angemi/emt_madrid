@@ -15,7 +15,7 @@ _LOGGER = logging.getLogger(__name__)
 class EMTCoordinator(DataUpdateCoordinator):
     """Class to manage fetching EMT Madrid data."""
 
-    def __init__(self, hass: HomeAssistant, api) -> None:
+    def __init__(self, hass: HomeAssistant) -> None:
         """Initialize."""
         super().__init__(
             hass,
