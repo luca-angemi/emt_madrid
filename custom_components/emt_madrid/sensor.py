@@ -76,3 +76,13 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
             return data[self.stop_id]["lines"][self.line]["arrivals"][0]
         except (KeyError, TypeError, IndexError):
             return None
+
+    @property
+    def extra_state_attributes(self):
+        """Return the state."""
+        data = self.coordinator.data
+        try:
+            lon, lat = data[self.stop_id]["stop_coordinates"]
+            return {"latitude": lat, "longitude": lon}
+        except (KeyError, TypeError, IndexError):
+            return None
