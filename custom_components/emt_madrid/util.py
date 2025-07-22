@@ -12,9 +12,8 @@ from .const import CONF_STOP_IDS
 logging.getLogger("emt_madrid").setLevel(logging.ERROR)
 
 async def async_get_api_emt_instance(data):
-    """Get EMT data for all requested stop IDs using the new EMTClient."""
+    """Get EMT data for all requested stop IDs using EMTClient."""
     async with ClientSession() as session:
-        # Crea i client per ogni fermata
         stops = {}
         for stop_id in data[CONF_STOP_IDS]:
             client = EMTClient(

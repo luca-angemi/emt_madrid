@@ -81,7 +81,7 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
 
     @property
     def extra_state_attributes(self):
-        """Return the state."""
+        """Return the attributes."""
         data = self.coordinator.data
         try:
             lon, lat = data[self.stop_id]["stop_coordinates"]
