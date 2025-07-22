@@ -6,6 +6,7 @@ from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,
     SensorEntityDescription,
+    SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTime
@@ -25,6 +26,7 @@ SENSOR_TYPE_EMT: tuple[SensorEntityDescription, ...] = (
         key="next_arrival",
         translation_key="arrival",
         device_class=SensorDeviceClass.DURATION,
+        state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTime.MINUTES,
     ),
 )
@@ -36,9 +38,9 @@ async def async_setup_entry(
     """Set up the EMT Madrid sensor."""
     coordinator = config_entry.runtime_data
     entities = [
-        EMTMadridSensor(SENSOR_TYPE_EMT[0], coordinator, line, stop_id)
-        for stop_id in list(coordinator.lines.keys())
-        for line in coordinator.lines[stop_id]
+        EMTMadridSensor(SENSOR_TYPE_EMT[0], coordinator, line_number, stop_id)
+        for stop_id, stop_data in coordinator.data.items()
+        for line_number in stop_data.get("lines", {})
     ]
 
     async_add_entities(entities)
@@ -59,7 +61,7 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
         self.entity_description = description
         self.line = line
         self.stop_id = stop_id
-        self._attr_name = "Bus " + line + " Next Arrival"
+        self._attr_name = "Bus stop " + stop_id + " line " + line + " Next Arrival"
         self._attr_unique_id = slugify(DOMAIN + " " + stop_id + " " + line,separator="_")
         self._device_id = "emt_madrid_bus_stop_" + stop_id
         self._attr_device_info = dr.DeviceInfo(

@@ -27,9 +27,4 @@ class EMTCoordinator(DataUpdateCoordinator):
 
     async def _async_update_data(self):
         """Fetch data from EMT Madrid API."""
-        stops = await async_get_api_emt_instance(self.config_entry.options)
-        stop_info = {}
-        for stop, info in stops.items():
-            stop_info[stop] = info.get_stop_info()
-            self.lines[stop] = list(stop_info[stop]["lines"].keys())
-        return stop_info
+        return await async_get_api_emt_instance(self.config_entry.options)
