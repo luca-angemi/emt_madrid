@@ -69,6 +69,8 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
             entry_type=dr.DeviceEntryType.SERVICE,
             name="Bus Stop " + stop_id,
         )
+        lon, lat = coordinator.data[stop_id]["stop_coordinates"]
+        self._attr_extra_state_attributes = {"latitude": lat, "longitude": lon}
 
     @property
     def native_value(self):
@@ -76,15 +78,5 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
         data = self.coordinator.data
         try:
             return data[self.stop_id]["lines"][self.line]["arrivals"][0]
-        except (KeyError, TypeError, IndexError):
-            return None
-
-    @property
-    def extra_state_attributes(self):
-        """Return the attributes."""
-        data = self.coordinator.data
-        try:
-            lon, lat = data[self.stop_id]["stop_coordinates"]
-            return {"latitude": lat, "longitude": lon}
         except (KeyError, TypeError, IndexError):
             return None
