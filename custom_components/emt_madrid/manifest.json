@@ -7,6 +7,6 @@
   "config_flow": true,
   "documentation": "https://github.com/luca-angemi/emt_madrid",
   "iot_class": "cloud_polling",
-  "requirements": ["emt_madrid"],
-  "version": "0.1"
+  "requirements": ["emt_madrid==1.0.1"],
+  "version": "0.2"
 }
