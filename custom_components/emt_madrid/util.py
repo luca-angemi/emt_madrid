@@ -4,8 +4,8 @@ import asyncio
 import logging
 
 from aiohttp import ClientSession
-
 from emt_madrid import EMTClient
+
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 
 from .const import CONF_STOP_IDS

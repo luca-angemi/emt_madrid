@@ -12,6 +12,7 @@ from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import device_registry as dr
+from homeassistant.helpers.entity_platform import AddConfigEntryEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 from homeassistant.util import slugify
 
@@ -33,8 +34,8 @@ SENSOR_TYPE_EMT: tuple[SensorEntityDescription, ...] = (
 
 
 async def async_setup_entry(
-    hass: HomeAssistant, config_entry: ConfigEntry, async_add_entities
-):
+    hass: HomeAssistant, config_entry: ConfigEntry, async_add_entities: AddConfigEntryEntitiesCallback
+) -> None:
     """Set up the EMT Madrid sensor."""
     coordinator = config_entry.runtime_data
     entities = [
@@ -75,7 +76,7 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
         self._attr_extra_state_attributes = {"latitude": lat, "longitude": lon}
 
     @property
-    def native_value(self):
+    def native_value(self) -> int | None:
         """Return the state."""
         value = self.coordinator.data[self.stop_id]["lines"][self.line]["arrivals"][0]
         return min(value, 45)

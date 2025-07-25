@@ -4,6 +4,7 @@ from datetime import timedelta
 import logging
 
 from emt_madrid.domain.exceptions import EMTError
+
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
