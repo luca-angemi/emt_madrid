@@ -18,5 +18,5 @@ class AirFryerEntity(CoordinatorEntity):
         description: EntityDescription,
         coordinator,
     ) -> None:
-        """Initialize a D-Link Power Plug entity."""
+        """Initialize a EMT Madrid entity."""
         super().__init__(coordinator)
