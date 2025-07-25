@@ -52,6 +52,8 @@ async def async_setup_entry(
 class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
     """EMT Madrid Sensor."""
 
+    _attr_has_entity_name = True
+
     def __init__(
         self,
         description: SensorEntityDescription,
