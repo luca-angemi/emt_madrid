@@ -1,9 +1,9 @@
 """Util for the EMT Madrid integration."""
 
+import asyncio
 import logging
 
 from aiohttp import ClientSession
-import asyncio
 
 from emt_madrid import EMTClient
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
@@ -13,6 +13,7 @@ from .const import CONF_STOP_IDS
 logging.getLogger("emt_madrid").setLevel(logging.ERROR)
 
 async def async_get_api_emt_instance(data):
+    """Get an instance of the EMT API client."""
     async with ClientSession() as session:
         async def fetch_stop(stop_id):
             client = EMTClient(
@@ -43,3 +44,4 @@ async def async_get_api_emt_instance(data):
             stops[stop_id] = stop_data
 
         return stops
+
