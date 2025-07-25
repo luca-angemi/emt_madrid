@@ -121,7 +121,7 @@ class OptionsFlowHandler(OptionsFlow):
                 if entry.unique_id.split("_")[2] not in user_input[CONF_STOP_IDS]:
                     entity_registry.async_remove(entry.entity_id)
                     device_registry = dr.async_get(self.hass)
-                    device_registry.async_remove_device(entry.device_id) 
+                    device_registry.async_remove_device(entry.device_id)
                 options = dict(self.config_entry.options)
                 options.update(user_input)
             return self.async_create_entry(title="", data=options)

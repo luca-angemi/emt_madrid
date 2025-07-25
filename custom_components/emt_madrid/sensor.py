@@ -62,7 +62,9 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
         self.line = line
         self.stop_id = stop_id
         self._attr_name = "Bus stop " + stop_id + " line " + line + " Next Arrival"
-        self._attr_unique_id = slugify(DOMAIN + " " + stop_id + " " + line,separator="_")
+        self._attr_unique_id = slugify(
+            DOMAIN + " " + stop_id + " " + line, separator="_"
+        )
         self._device_id = "emt_madrid_bus_stop_" + stop_id
         self._attr_device_info = dr.DeviceInfo(
             identifiers={(DOMAIN, self._device_id)},
