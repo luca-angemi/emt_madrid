@@ -75,8 +75,14 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
     @property
     def native_value(self):
         """Return the state."""
-        data = self.coordinator.data
-        try:
-            return data[self.stop_id]["lines"][self.line]["arrivals"][0]
-        except (KeyError, TypeError, IndexError):
-            return None
+        value = self.coordinator.data[self.stop_id]["lines"][self.line]["arrivals"][0]
+        return min(value, 45)
+
+    @property
+    def available(self) -> bool:
+        """Return the state."""
+        return (
+            self.stop_id in self.coordinator.data
+            and self.line in self.coordinator.data[self.stop_id].get("lines", {})
+            and self.coordinator.data[self.stop_id]["lines"][self.line]["arrivals"]
+        )

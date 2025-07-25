@@ -1,10 +1,11 @@
 """Coordinator for EMT Madrid."""
 
+from emt_madrid.domain.exceptions import EMTError
 from datetime import timedelta
 import logging
 
 from homeassistant.core import HomeAssistant
-from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
 
 from .const import DOMAIN
 from .util import async_get_api_emt_instance
@@ -23,8 +24,9 @@ class EMTCoordinator(DataUpdateCoordinator):
             name=DOMAIN,
             update_interval=timedelta(seconds=30),
         )
-        self.lines = {}
 
     async def _async_update_data(self):
-        """Fetch data from EMT Madrid API."""
-        return await async_get_api_emt_instance(self.config_entry.options)
+        try:
+            return await async_get_api_emt_instance(self.config_entry.options)
+        except EMTError as err:
+            raise UpdateFailed(f"EMT API error: {err}") from err
