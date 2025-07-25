@@ -7,7 +7,7 @@ from homeassistant.helpers.entity import EntityDescription
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 
-class AirFryerEntity(CoordinatorEntity):
+class EMTMadridEntity(CoordinatorEntity):
     """Representation of a EMT Madrid entity."""
 
     _attr_has_entity_name = True
