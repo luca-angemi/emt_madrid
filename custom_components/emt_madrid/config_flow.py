@@ -48,7 +48,7 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
 async def validate_input(hass: HomeAssistant, data: dict[str, Any]) -> dict[str, Any]:
     """Validate the user input allows us to connect."""
 
-    stop_info = await async_get_api_emt_instance(data)
+    stop_info = await async_get_api_emt_instance(hass, data)
     if not stop_info:
         raise InvalidAuth
 
@@ -104,7 +104,7 @@ class InvalidAuth(HomeAssistantError):
 
 
 class OptionsFlowHandler(OptionsFlow):
-    """Config flow options handler for iss."""
+    """Config flow options handler for EMT Madrid."""
 
     async def async_step_init(
         self, user_input: dict[str, Any] | None = None
@@ -112,16 +112,22 @@ class OptionsFlowHandler(OptionsFlow):
         """Manage the options."""
         if user_input is not None:
             entity_registry = er.async_get(self.hass)
+            device_registry = dr.async_get(self.hass)
             entries = er.async_entries_for_config_entry(
                 entity_registry, self._config_entry_id
             )
+            removed_devices = set()
+
             for entry in entries:
                 if entry.unique_id.split("_")[2] not in user_input[CONF_STOP_IDS]:
                     entity_registry.async_remove(entry.entity_id)
-                    device_registry = dr.async_get(self.hass)
-                    device_registry.async_remove_device(entry.device_id)
-                options = dict(self.config_entry.options)
-                options.update(user_input)
+                    removed_devices.add(entry.device_id)
+
+            for device_id in removed_devices:
+                device_registry.async_remove_device(device_id)
+
+            options = dict(self.config_entry.options)
+            options.update(user_input)
             return self.async_create_entry(title="", data=options)
 
         return self.async_show_form(
