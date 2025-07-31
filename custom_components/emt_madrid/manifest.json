@@ -7,5 +7,6 @@
   "config_flow": true,
   "documentation": "https://www.home-assistant.io/integrations/emt_madrid",
   "iot_class": "cloud_polling",
-  "requirements": ["emt_madrid==1.0.1"]
+  "requirements": ["emt_madrid==1.0.1"],
+  "version": 1
 }
