@@ -16,7 +16,7 @@ from homeassistant.config_entries import (
 from homeassistant.const import CONF_PASSWORD, CONF_USERNAME
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.exceptions import HomeAssistantError
-from homeassistant.helpers import device_registry as dr, entity_registry as er
+from homeassistant.helpers import device_registry as dr
 from homeassistant.helpers.selector import (
     SelectSelector,
     SelectSelectorConfig,
@@ -111,20 +111,14 @@ class OptionsFlowHandler(OptionsFlowWithReload):
     ) -> ConfigFlowResult:
         """Manage the options."""
         if user_input is not None:
-            entity_registry = er.async_get(self.hass)
             device_registry = dr.async_get(self.hass)
-            entries = er.async_entries_for_config_entry(
-                entity_registry, self._config_entry_id
+            entries = dr.async_entries_for_config_entry(
+                device_registry, self._config_entry_id
             )
-            removed_devices = set()
 
             for entry in entries:
-                if entry.unique_id.split("_")[2] not in user_input[CONF_STOP_IDS]:
-                    entity_registry.async_remove(entry.entity_id)
-                    removed_devices.add(entry.device_id)
-
-            for device_id in removed_devices:
-                device_registry.async_remove_device(device_id)
+                if list(entry.identifiers)[0][1] not in user_input[CONF_STOP_IDS]:
+                    device_registry.async_remove_device(entry.id)
 
             options = dict(self.config_entry.options)
             options.update(user_input)
