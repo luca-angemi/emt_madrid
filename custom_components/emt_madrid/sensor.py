@@ -51,7 +51,7 @@ async def async_setup_entry(
 
 class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
     """EMT Madrid Sensor."""
-    
+
     _attr_has_entity_name = True
 
     def __init__(
@@ -70,8 +70,9 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
         self._attr_unique_id = slugify(
             DOMAIN + " " + stop_id + " " + line, separator="_"
         )
+        self._device_id = "emt_madrid_bus_stop_" + stop_id
         self._attr_device_info = dr.DeviceInfo(
-            identifiers={(DOMAIN, stop_id)},
+            identifiers={(DOMAIN, self._device_id)},
             entry_type=dr.DeviceEntryType.SERVICE,
             name="Bus Stop " + stop_id,
         )

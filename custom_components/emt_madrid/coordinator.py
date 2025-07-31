@@ -4,6 +4,7 @@ from datetime import timedelta
 import logging
 
 from emt_madrid.domain.exceptions import EMTError
+
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator, UpdateFailed
@@ -19,7 +20,7 @@ class EMTCoordinator(DataUpdateCoordinator):
 
     def __init__(self, hass: HomeAssistant, config_entry: ConfigEntry) -> None:
         """Initialize."""
-        
+
         super().__init__(
             hass,
             _LOGGER,
