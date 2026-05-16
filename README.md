@@ -20,5 +20,11 @@ The integration will create a new `sensor` with the waiting time to the next arr
 
 <img width="552" height="577" alt="image" src="https://github.com/user-attachments/assets/6ddb05ba-ce0b-4dfe-8c47-372d0d47ba3e" />
 
+The sensor has also `lat` and `lon` with the next bus position as attributes, so its movements can be tracked on a map. 
+
+
+<img width="602" height="340" alt="image" src="https://github.com/user-attachments/assets/70aec338-d84b-4bb9-a023-cbcf7e9239d9" />
+
+
 
 [!["Buy Me A Coffee"](https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png)](https://www.buymeacoffee.com/luca.angemi)
