@@ -27,7 +27,6 @@ SENSOR_TYPE_EMT: tuple[SensorEntityDescription, ...] = (
         key="next_arrival",
         translation_key="arrival",
         device_class=SensorDeviceClass.DURATION,
-        state_class=SensorStateClass.MEASUREMENT,
         native_unit_of_measurement=UnitOfTime.MINUTES,
     ),
 )
@@ -75,8 +74,6 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
             entry_type=dr.DeviceEntryType.SERVICE,
             name="Bus Stop " + stop_id,
         )
-        lon, lat = coordinator.data[stop_id]["stop_coordinates"]
-        self._attr_extra_state_attributes = {"latitude": lat, "longitude": lon}
 
     @property
     def native_value(self) -> int | None:
@@ -92,3 +89,9 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
             and self.line in self.coordinator.data[self.stop_id].get("lines", {})
             and self.coordinator.data[self.stop_id]["lines"][self.line]["arrivals"]
         )
+
+    @property
+    def extra_state_attributes(self):
+        """Return entity specific state attributes."""
+        lon, lat = self.coordinator.data[self.stop_id]["lines"][self.line].get("bus_coords", (None, None))
+        return {"latitude": lat, "longitude": lon}
