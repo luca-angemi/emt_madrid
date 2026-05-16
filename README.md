@@ -18,7 +18,8 @@ Restart HA.
 
 The integration will create a new `sensor` with the waiting time to the next arrival for each bus line present at the bus stop.
 
-<img width="552" height="577" alt="image" src="https://github.com/user-attachments/assets/6ddb05ba-ce0b-4dfe-8c47-372d0d47ba3e" />
+<img width="697" height="597" alt="image" src="https://github.com/user-attachments/assets/1215329c-e50a-4e4c-8637-70769dc94dbf" />
+
 
 The sensor has also `lat` and `lon` with the next bus position as attributes, so its movements can be tracked on a map. 
 
