@@ -9,7 +9,6 @@ from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .const import CONF_STOP_IDS
 
-
 async def async_get_api_emt_instance(hass: HomeAssistant, data):
     """Get an instance of the EMT API client."""
     session = async_get_clientsession(hass)
@@ -22,11 +21,36 @@ async def async_get_api_emt_instance(hass: HomeAssistant, data):
             session=session,
         )
         stop = await client.get_arrivals()
+
+        bus_coords_by_line = {}
+
+        for line in stop.stop_lines:
+            buses = [
+                b for b in stop.bus_arrivals
+                if b.line == line.line_number and b.estimate_arrive_sec is not None
+            ]
+
+            if not buses:
+                bus_coords_by_line[line.line_number] = None
+                continue
+
+            first_bus = min(
+                buses,
+                key=lambda b: b.estimate_arrive_sec
+            )
+
+            bus_coords_by_line[line.line_number] = first_bus.coordinates
+
         return stop_id, {
             "stop_coordinates": stop.stop_coordinates,
             "lines": {
                 line.line_number: {
-                    "arrivals": list(filter(None, [line.arrival, line.next_arrival]))
+                    "arrivals": [
+                        arr
+                        for arr in [line.arrival, line.next_arrival]
+                        if arr is not None
+                    ],
+                    "bus_coords": bus_coords_by_line.get(line.line_number),
                 }
                 for line in stop.stop_lines
             },
