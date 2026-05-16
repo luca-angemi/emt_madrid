@@ -11,7 +11,7 @@ Restart HA.
 
 
 1. Configuration > Integration > Add Integration > EMT Madrid
-2. Enter your  EMT Email and Password along with your preferred bus stop number.
+2. Enter your  EMT Email and Password along with your preferred bus stop(s) number.
 
 
 ## Features
