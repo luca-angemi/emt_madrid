@@ -1,11 +1,9 @@
 """Config flow for EMT Madrid integration."""
 
-from __future__ import annotations
-
 import logging
 from typing import Any
 
-import voluptuous as vol
+import probatio
 
 from homeassistant.config_entries import (
     ConfigEntry,
@@ -29,9 +27,9 @@ from .util import async_get_api_emt_instance
 _LOGGER = logging.getLogger(__name__)
 
 
-STEP_USER_DATA_SCHEMA = vol.Schema(
+STEP_USER_DATA_SCHEMA = probatio.Schema(
     {
-        vol.Required(CONF_STOP_IDS): SelectSelector(
+        probatio.Required(CONF_STOP_IDS): SelectSelector(
             SelectSelectorConfig(
                 options=[],
                 multiple=True,
@@ -39,8 +37,8 @@ STEP_USER_DATA_SCHEMA = vol.Schema(
                 mode=SelectSelectorMode.DROPDOWN,
             )
         ),
-        vol.Required(CONF_USERNAME): str,
-        vol.Required(CONF_PASSWORD): str,
+        probatio.Required(CONF_USERNAME): str,
+        probatio.Required(CONF_PASSWORD): str,
     }
 )
 
@@ -126,9 +124,9 @@ class OptionsFlowHandler(OptionsFlowWithReload):
 
         return self.async_show_form(
             step_id="init",
-            data_schema=vol.Schema(
+            data_schema=probatio.Schema(
                 {
-                    vol.Required(
+                    probatio.Required(
                         CONF_STOP_IDS, default=self.config_entry.options[CONF_STOP_IDS]
                     ): SelectSelector(
                         SelectSelectorConfig(
