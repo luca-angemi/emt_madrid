@@ -26,7 +26,7 @@ class EMTCoordinator(DataUpdateCoordinator):
             _LOGGER,
             name=DOMAIN,
             config_entry=config_entry,
-            update_interval=timedelta(seconds=30),
+            update_interval=timedelta(seconds=60),
         )
 
     async def _async_update_data(self):
