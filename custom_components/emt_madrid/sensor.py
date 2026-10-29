@@ -51,6 +51,7 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
     """EMT Madrid Sensor."""
 
     _attr_has_entity_name = True
+    _unrecorded_attributes = frozenset({"latitude", "longitude"})
 
     def __init__(
         self,
