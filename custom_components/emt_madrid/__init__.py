@@ -11,7 +11,7 @@ PLATFORMS: list[Platform] = [Platform.SENSOR]
 type EMTConfigEntry = ConfigEntry[EMTCoordinator]
 
 
-async def async_setup_entry(hass: HomeAssistant, config_entry: EMTConfigEntry) -> bool:
+async def async_setup_entry(hass: HomeAssistant, config_entry: EMTConfigEntry) -> None:
     """Set up EMT Madrid from a config entry."""
 
     coordinator = EMTCoordinator(hass, config_entry)
@@ -19,9 +19,8 @@ async def async_setup_entry(hass: HomeAssistant, config_entry: EMTConfigEntry) -
     config_entry.runtime_data = coordinator
 
     await hass.config_entries.async_forward_entry_setups(config_entry, PLATFORMS)
-    return True
 
 
-async def async_unload_entry(hass: HomeAssistant, config_entry: EMTConfigEntry) -> bool:
+async def async_unload_entry(hass: HomeAssistant, config_entry: EMTConfigEntry) -> None:
     """Unload a config entry."""
-    return await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
+    await hass.config_entries.async_unload_platforms(config_entry, PLATFORMS)
