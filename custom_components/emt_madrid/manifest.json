@@ -7,5 +7,5 @@
   "documentation": "https://github.com/luca-angemi/emt_madrid",
   "iot_class": "cloud_polling",
   "requirements": ["emt_madrid==1.1.1"],
-  "version": 1
+  "version": 0.2
 }
