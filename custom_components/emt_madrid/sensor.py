@@ -51,7 +51,7 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
     """EMT Madrid Sensor."""
 
     _attr_has_entity_name = True
-    _unrecorded_attributes = frozenset({"latitude", "longitude"})
+    _unrecorded_attributes = frozenset({"latitude", "longitude", "next_arrival"})
 
     def __init__(
         self,
@@ -65,7 +65,7 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
         self.entity_description = description
         self.line = line
         self.stop_id = stop_id
-        self._attr_name = "Line " + line + " Next Arrival"
+        self._attr_name = "Line " + line + " Arrival"
         self._attr_unique_id = slugify(
             DOMAIN + " " + stop_id + " " + line, separator="_"
         )
@@ -94,4 +94,5 @@ class EMTMadridSensor(CoordinatorEntity[EMTCoordinator], SensorEntity):
     def extra_state_attributes(self):
         """Return entity specific state attributes."""
         lon, lat = self.coordinator.data[self.stop_id]["lines"][self.line].get("bus_coords", (None, None))
-        return {"latitude": lat, "longitude": lon}
+        next_arrival = min(self.coordinator.data[self.stop_id]["lines"][self.line]["arrivals"][-1], 45)
+        return {"latitude": lat, "longitude": lon, "next_arrival": next_arrival}
